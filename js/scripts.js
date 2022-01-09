@@ -30,3 +30,25 @@ function operate(operation, n1, n2){
             break;
     }
 }
+
+const display = document.querySelector('.display');
+const buttons = document.querySelectorAll('.btns > .btn');
+const btnClear = document.querySelector('.btn-clear');
+
+let displayValue = '';
+
+btnClear.addEventListener('click', clearDisplay);
+
+function clearDisplay(){
+    displayValue = ''
+    display.textContent = displayValue;
+}
+
+for (let btn of buttons) {
+    btn.addEventListener('click',displayInput);
+}
+
+function displayInput(e){
+    displayValue += e.target.textContent;
+    display.textContent = displayValue;
+}
