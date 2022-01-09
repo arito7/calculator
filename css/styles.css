@@ -51,7 +51,7 @@ body {
     padding: 8px;
 }
 
-.btns > .btn-clear {
+.btns > .btn.clear {
     grid-column: 1 / -1;
     width: 100%;
 }
