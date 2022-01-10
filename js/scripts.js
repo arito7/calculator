@@ -62,28 +62,78 @@ function updateDisplay(){
  * Event Listeners
  */
 
+document.addEventListener('keydown', e => {
+    console.log(e.code);
+    switch(e.code){
+        case 'Digit0':
+            displayValue += '0';
+            updateDisplay();
+            break;
+        case 'Digit1': 
+            displayValue += '1';
+            updateDisplay();
+            break;
+        case 'Digit2':
+            displayValue += '2';
+            updateDisplay();
+            break;
+        case 'Digit3':
+            displayValue += '3';
+            updateDisplay();
+            break;
+        case 'Digit4':
+            displayValue += '4';
+            updateDisplay();
+            break;
+        case 'Digit5':
+            displayValue += '5';
+            updateDisplay();
+            break;
+        case 'Digit6':
+            displayValue += '6';
+            updateDisplay();
+            break;
+        case 'Digit7':
+            displayValue += '7';
+            updateDisplay();
+            break;
+        case 'Digit8':
+            displayValue += '8';
+            updateDisplay();
+            break;
+        case 'Digit9':
+            displayValue += '9';
+            updateDisplay();
+            break;
+    }
+})
+
 /**
  * update displayValue to be an empty string
  * and call updateDisplay();
  */
 btnClear.addEventListener('click', clearDisplay);
 function clearDisplay(){
-    displayValue = ''
-    updateDisplay()
+    currentNumber = '';
+    displayValue = '';
+    selectedNumbers = [];
+    selectedOperations = [];
+    updateDisplay();
 }
 
 /**
+ * DIGIT CLICK
  * When a digit is clicked update value of displayValue variable
  * and call updateDisplay()
  */
 for (let btn of btnDigit) {
     btn.addEventListener('click', e =>{
         currentNumber += btn.textContent;
-        displayValue += btn.textContent;
+        displayValue = currentNumber;
         updateDisplay();
     });
 }
-console.log([].length);
+
 for (let btn of btnOps){
     btn.addEventListener('click',operation)
 }
@@ -92,7 +142,7 @@ function operation(e){
     currentNumber = '';
     if(e.target.textContent !== operators.equals){
         addOperation(e.target.textContent);
-        displayValue += e.target.textContent;
+        calculate();
         updateDisplay();
     } else {
         calculate();
@@ -109,23 +159,15 @@ function addOperation(operation){
 }
 
 function calculate(){
-    console.table(selectedNumbers);
-    console.table(selectedOperations);
-    let result = 0;
-    let indexOfOperation = '';
-    while (selectedNumbers.length > 1){
-        indexOfOperation = selectedOperations.findIndex(e => {return e === operators.div || e === operators.mult})
-        if (indexOfOperation === -1){
-            indexOfOperation = 0;
-        }
-        result = operate(selectedOperations[indexOfOperation], selectedNumbers[indexOfOperation], selectedNumbers[indexOfOperation + 1]);
-        selectedOperations.splice(indexOfOperation,1);
-        selectedNumbers.splice(indexOfOperation,2,result);
-        console.table(selectedNumbers);
-        console.table(selectedOperations);
-    }
-    selectedOperations = [];
-    selectedNumbers = [];
-    displayValue = result;
-    updateDisplay();
+    if (selectedNumbers.length > 1){
+        // perform operation on first and second number store result as first number
+        selectedNumbers[0] = operate(selectedOperations[0], selectedNumbers[0], selectedNumbers[1]);
+        // display first number
+        displayValue = selectedNumbers[0];
+        updateDisplay();
+        // remove 2nd number that was used in operation
+        selectedNumbers.splice(1,1);
+        // remove the operator
+        selectedOperations.splice(0,1);
+    } 
 }
