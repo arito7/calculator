@@ -36,6 +36,17 @@ const operators = {
     minus:'-',
     mult:'×',
     equals: '=',
+    dot: '.',
+    altDiv: '/',
+    altMult: '*',
+    enter: 'Enter',
+    includes:function(val){
+        for (const property in this){
+            if (val === this[property]){
+                return true;
+            }
+        }
+    },
 }
 
 function add(n1, n2){
@@ -67,7 +78,7 @@ function operate(operation, n1, n2){
         case operators.minus:
             result = subtract(n1, n2);
             break;
-        case operators.mult: 
+        case operators.mult:
             result = multiply(n1,n2);
             break;
         case operators.div:
@@ -103,34 +114,65 @@ function clearDisplay(){
  * and call updateDisplay()
  */
 for (let btn of btnDigit) {
-    btn.addEventListener('click', () => {
-        // if selectedNumbers is empty means this is a new calculation so reset previous answer
-        if(equation.numbers.length === 0){
-            equation.answer = '';
-        }
-        equation.number += btn.textContent;
-        updateDisplay();
+    btn.addEventListener('click', e =>{
+        numberInput(e.target.textContent)
     });
 }
+
+function numberInput(number){
+    if(number === operators.dot){
+        if (equation.number.includes(operators.dot)){
+            return;
+        }
+    }
+    equation.number += number;
+    updateDisplay();
+}
+
+document.addEventListener('keydown', e =>{
+    if (!isNaN(parseInt(e.key)) || e.key === operators.dot){
+        numberInput(e.key);
+    } else if (operators.includes(e.key)){
+        let k = e.key;
+        switch (k) {
+            case operators.altMult:
+                k = operators.mult;
+                break;
+            case operators.altDiv:
+                k = operators.div;
+                break;
+            case operators.enter:
+                k = operators.equals;
+                break;
+        }
+        operation(k);
+    }
+});
 
 /**
  * OPERATOR CLICK
  */
 for (let btn of btnOps){
-    btn.addEventListener('click',operation)
+    btn.addEventListener('click',e=>{
+        operation(e.target.textContent);
+    });
 }
-function operation(e){
+function operation(inputOp){
+    // prevent equals input on invalid equations
+    if (inputOp === operators.equals && equation.numbers.length === 0){
+        return;
+    }
     // this check is to ignore any operational inputs when the
     // equation is empty
     if (equation.number != ''){
         equation.pushNumber();  
-        equation.pushOp(e.target.textContent);
+        equation.pushOp(inputOp);
         if (equation.numbers.length > 1){
             calculate();
         }
         updateDisplay();
     }
-    if (e.target.textContent === operators.equals){
+    if (inputOp === operators.equals){
         equation.reset();
     }
 }
@@ -144,8 +186,9 @@ function calculate(){
         // remove the 2nd number, the first number is now the result of the operation that was just performed
         equation.numbers.splice(1);
         equation.answer = equation.numbers[0];
+        equation.answer = parseFloat(equation.answer.toFixed(13));
         // 14 is the max size that can be displayed
-        equation.answer = String(equation.answer).slice(0,14);
+        // equation.answer = String(equation.answer).slice(0,14);
         // display first number
         if (equation.numbers[0] === undefined){
             equation.answer = 'tsk tsk tsk';
