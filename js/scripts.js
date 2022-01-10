@@ -123,12 +123,15 @@ function operation(e){
     // this check is to ignore any operational inputs when the
     // equation is empty
     if (equation.number != ''){
-        equation.pushNumber();
+        equation.pushNumber();  
         equation.pushOp(e.target.textContent);
         if (equation.numbers.length > 1){
             calculate();
         }
         updateDisplay();
+    }
+    if (e.target.textContent === operators.equals){
+        equation.reset();
     }
 }
 
