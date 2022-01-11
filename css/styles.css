@@ -78,7 +78,12 @@ body {
 }
 .btns > .btn.clear {
     background-color: #fa7970;
-    grid-column: 1 / -1;
+    grid-column: 1 / 4;
+    width: 100%;
+}
+.btns > .btn.del {
+    background-color: #fa7970;
+    grid-column: 4 / -1;
     width: 100%;
 }
 

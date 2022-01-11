@@ -40,6 +40,8 @@ const operators = {
     altDiv: '/',
     altMult: '*',
     enter: 'Enter',
+    backspace: 'Backspace',
+    delete: 'Delete',
     includes:function(val){
         for (const property in this){
             if (val === this[property]){
@@ -88,6 +90,18 @@ function operate(operation, n1, n2){
     return result;
 }
 
+function deleteInput(){
+    if(equation.getEquation() !== ''){
+        if (equation.number !== ''){
+            equation.number = equation.number.slice(0,-1);
+        } else if (equation.ops.length !== 0){
+            equation.ops.pop();
+            equation.number = String(equation.numbers[0]);
+            equation.numbers = [];
+        }
+        updateDisplay();
+    }
+}
 
 /**
  * outputs value of the variable equation to the calculators divDisplay.
@@ -129,6 +143,9 @@ function numberInput(number){
     updateDisplay();
 }
 
+/**
+ * KEYBOARD INPUT
+ */
 document.addEventListener('keydown', e =>{
     if (!isNaN(parseInt(e.key)) || e.key === operators.dot){
         numberInput(e.key);
@@ -144,16 +161,23 @@ document.addEventListener('keydown', e =>{
             case operators.enter:
                 k = operators.equals;
                 break;
+            case operators.delete:
+                clearDisplay();
+                return;
+            case operators.backspace:
+                deleteInput();
+                return;
         }
         operation(k);
     }
+    console.log(e.key)
 });
 
 /**
  * OPERATOR CLICK
  */
 for (let btn of btnOps){
-    btn.addEventListener('click',e=>{
+    btn.addEventListener('click', e => {
         operation(e.target.textContent);
     });
 }
