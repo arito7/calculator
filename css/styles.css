@@ -17,28 +17,39 @@ body {
     border-radius: 8px;
     color: #ecf2f8;
     max-width: 800px;
-    padding: 16px;
+    padding: 24px;
 }
 
 .display {
     background-color: #161b22;
+    border: 1px solid #555;
     border-radius: 8px;
     color: #ddd;
     height: 120px;
-    margin-bottom: 8px;
+    max-width: 368px;
+    margin-bottom: 16px;
     text-align: end;
     padding: 10px;
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+}
+
+.display > .answer {
+    font-size: 1.2em;
+    align-self: end;
+    justify-self: end;
 }
 
 .btns {
     display: grid;
-    gap: 8px;
+    gap: 16px;
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: auto;
     grid-auto-columns: auto;
 }
 
-.btns > div {
+.btns > .btn {
     align-items: center;
     background-color: #89929b;
     border-radius: 40px;
@@ -47,11 +58,35 @@ body {
     justify-content: center;
     text-align: center;
     width: 80px;
-    margin: 4px;
     padding: 8px;
 }
 
+.btns > .btn:active {
+    transform: scale(0.9);
+}
+
+.btns > .btn:hover,
+.btns > .btn.op:hover,
+.btns > .btn.clear:hover,
+.btns > .btn.op.equal:hover {
+    background-color: orange;
+}
+
+.btns > .btn.op {
+    color: #222;
+    background-color: #a2d2fb;
+}
 .btns > .btn.clear {
-    grid-column: 1 / -1;
+    background-color: #fa7970;
+    grid-column: 1 / 4;
     width: 100%;
+}
+.btns > .btn.del {
+    background-color: #fa7970;
+    grid-column: 4 / -1;
+    width: 100%;
+}
+
+.btns > .btn.op.equal {
+    background-color: #7ce38b;
 }
