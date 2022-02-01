@@ -1,92 +1,92 @@
+@font-face {
+  font-family: ubuntu;
+  src: url(../fonts/Ubuntu-Regular.ttf);
+}
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #EEE;
-    display: flex;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 2em;
-    justify-content: center;
-    height: 100vh;
-    align-items: center;
+  background-color: #eee;
+  font-family: ubuntu, "Courier New", Courier, monospace;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .calculator {
-    background-color: #21262d;
-    border-radius: 8px;
-    color: #ecf2f8;
-    max-width: 800px;
-    padding: 24px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  width: min(400px, 100%);
+  background-color: #21262d;
+  grid-template-columns: repeat(4, 1fr);
+  border-radius: 8px;
+  color: #ecf2f8;
+  padding: 1rem;
+  gap: 0.6rem;
 }
 
 .display {
-    background-color: #161b22;
-    border: 1px solid #555;
-    border-radius: 8px;
-    color: #ddd;
-    height: 120px;
-    max-width: 368px;
-    margin-bottom: 16px;
-    text-align: end;
-    padding: 10px;
-    word-wrap: break-word;
-    display: flex;
-    flex-direction: column;
+  grid-row: span 2;
+  grid-column: span 4;
+  background-color: #161b22;
+  border: 1px solid #555;
+  border-radius: 8px;
+  color: #ddd;
+  width: 100%;
+  height: 120px;
+  text-align: end;
+  padding: 1rem;
+  word-wrap: break-word;
+}
+
+.btn.clear,
+.btn.del {
+  background-color: #fa7970;
+  grid-column: span 2;
+  width: 100%;
+  border-radius: 3rem;
 }
 
 .display > .answer {
-    font-size: 1.2em;
-    align-self: end;
-    justify-self: end;
+  font-size: 1.2em;
+  align-self: end;
+  justify-self: end;
 }
 
-.btns {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto;
-    grid-auto-columns: auto;
+.btn {
+  display: grid;
+  align-items: center;
+  text-align: center;
+  background-color: #89929b;
+  border-radius: 50%;
+  height: 5rem;
+  width: 5rem;
+  font-size: 1.4rem;
 }
 
-.btns > .btn {
-    align-items: center;
-    background-color: #89929b;
-    border-radius: 40px;
-    display: flex;
-    height: 80px;
-    justify-content: center;
-    text-align: center;
-    width: 80px;
-    padding: 8px;
+.btn:active {
+  transform: scale(0.9);
 }
 
-.btns > .btn:active {
-    transform: scale(0.9);
+.btn:hover,
+.btn.op:hover,
+.btn.clear:hover,
+.btn.op.equal:hover {
+  background-color: orange;
 }
 
-.btns > .btn:hover,
-.btns > .btn.op:hover,
-.btns > .btn.clear:hover,
-.btns > .btn.op.equal:hover {
-    background-color: orange;
+.btn.op {
+  color: #222;
+  background-color: #a2d2fb;
 }
 
-.btns > .btn.op {
-    color: #222;
-    background-color: #a2d2fb;
-}
-.btns > .btn.clear {
-    background-color: #fa7970;
-    grid-column: 1 / 4;
-    width: 100%;
-}
-.btns > .btn.del {
-    background-color: #fa7970;
-    grid-column: 4 / -1;
-    width: 100%;
-}
-
-.btns > .btn.op.equal {
-    background-color: #7ce38b;
+.btn.op.equal {
+  background-color: #7ce38b;
 }
